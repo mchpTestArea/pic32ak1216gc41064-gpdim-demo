@@ -1,0 +1,42 @@
+{
+   "metaDataVersion":"1.0.0",
+   "category":"com.microchip.ide.project",
+   "content":{
+      "metaDataVersion":"1.3.0",
+      "name":"com.microchip.mplabx.project.pic32ak1216gc41064-gpdim-demo",
+      "version":"1.0.0",
+      "displayName":"PIC32AK1216GC41064 General Purpose DIM Demo",
+      "projectName":"pic32ak1216gc41064-gpdim-demo",
+      "shortDescription":"PIC32AK1216GC41064 General Purpose DIM Demo",
+      "ide":{
+         "name":"MPLABX",
+         "semverRange":">=6.25.0"
+      },
+      "compiler":{
+         "name":"XC32",
+         "semverRange":"^4.60.0"
+      },
+      "dfp":{
+         "name":"PIC32AK-GC_DFP",
+         "semverRange":">=1.0.5"
+      },
+	  "configurator": {
+         "name": "MCC",
+         "semverRange": ">=4.0.1"
+      },
+      "device":{
+         "metaDataVersion":"1.0.0",
+         "category":"com.microchip.portal.contentRef",
+         "content":{
+            "metaDataVersion":"1.0.0",
+            "category":"com.microchip.device",
+            "name":"PIC32AK1216GC41064",
+            "versionRange":"*"
+         }
+      },
+      "keywords":[
+         "GPIO",
+         "UART"
+      ]
+   }
+}
