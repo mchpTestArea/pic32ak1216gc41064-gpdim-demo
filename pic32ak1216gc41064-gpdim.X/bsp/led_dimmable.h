@@ -23,6 +23,7 @@
 #define LED_DIMMABLE_H
 
 #include <stdbool.h>
+#include <stdint.h>
 
 /**
  @ingroup  led_dimmable

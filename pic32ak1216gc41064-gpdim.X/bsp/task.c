@@ -36,18 +36,16 @@ struct TASK
     uint32_t count;
 };
 
-static struct TASK tasks[TASK_MAX_COUNT];
+static volatile struct TASK tasks[TASK_MAX_COUNT];
 
 void TASK_Initialize(void)
 {
-    T1CON = 0;
-    
-    (void)memset(tasks, 0, sizeof(tasks));
-    
-    PR1 = 0x000007DA;
-
-    IEC1bits.T1IE = 1;
-    T1CONbits.ON = 1;
+    for(int i=0; i<sizeof(tasks)/sizeof(struct TASK); i++)
+    {
+        tasks[i].task = NULL;
+        tasks[i].rate = 0;
+        tasks[i].count = 0;
+    }
 }
 
 bool TASK_Request(void (*task)(void), uint32_t milliseconds)
@@ -84,8 +82,8 @@ void TASK_Cancel(void (*task)(void))
     }
 
 }
-void __attribute__ ( ( __interrupt__ , auto_psv ) ) _T1Interrupt ( void );
-void __attribute__ ( ( __interrupt__ , auto_psv ) ) _T1Interrupt ( void )
+
+void TASK_InterruptHandler(void)
 {
     unsigned int i ;
 
@@ -95,15 +93,13 @@ void __attribute__ ( ( __interrupt__ , auto_psv ) ) _T1Interrupt ( void )
         {
             tasks[i].count++ ;
 
-            if (tasks[i].count == tasks[i].rate)
+            if (tasks[i].count >= tasks[i].rate)
             {
                 tasks[i].task() ;
                 tasks[i].count = 0u ;
             }
         }
     }
-
-    IFS1bits.T1IF = 0 ;
 }
 
 

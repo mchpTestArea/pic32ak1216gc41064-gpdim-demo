@@ -21,24 +21,26 @@
 
 #include <xc.h>
 #include "led_red.h"
-#include "../mcc_generated_files/pwm/sccp1.h"
+#include "../../src/config/default/peripheral/ccp/plib_sccp1.h"
 
 static bool issccp1Enabled = false;
 
 void LED_RED_Initialize(void)
 {
-    
+    SCCP1_CompareInitialize();
+    SCCP1_Compare16bitPeriodValueSet(0x0FFF);
+    SCCP1_Compare16bitRBValueSet(0x0000);       
 }
 
 void LED_RED_On(void)
 {
-    SCCP1_PWM_Enable();
+    SCCP1_CompareStart();
     issccp1Enabled = true;
 }
 
 void LED_RED_Off(void)
 {
-    SCCP1_PWM_Disable();
+    SCCP1_CompareStop();
     issccp1Enabled = false;
 }
 
@@ -61,7 +63,7 @@ void LED_RED_Set(bool on)
 
 void LED_RED_SetIntensity(uint16_t request)
 {  
-    SCCP1_PWM_DutyCycleSet(request);
+    SCCP1_Compare16bitRBValueSet(request); 
 } 
 
 const struct LED_DIMMABLE ledRed = 

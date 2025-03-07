@@ -50,4 +50,13 @@ bool TASK_Request(void (*task)(void), uint32_t milliseconds);
  */
 void TASK_Cancel(void (*task)(void));
 
+/**
+ * @ingroup  task
+ * @brief    To be called by a callback and occurs when a hardware interrupt occurs. 
+ * Executes the tasks in the tasks queue.   
+ * @param[in] none
+ * @return   none
+ */
+void TASK_InterruptHandler(void);
+
 #endif

@@ -29,7 +29,9 @@
 
 void LED_RGB_Initialize(void)
 {
-
+    ledRed.initialize();
+    ledGreen.initialize();
+    ledBlue.initialize();
 }
 
 void LED_RGB_On(void)

@@ -20,7 +20,7 @@
 */
 
 #include "pot.h"
-#include "../mcc_generated_files/adc/adc1.h"
+#include "../../src/config/default/peripheral/adc/plib_adc1.h"
 #include <xc.h>
 
 void POT_Initialize(void)
@@ -30,14 +30,11 @@ void POT_Initialize(void)
 
 uint16_t POT_Read(void)
 {
-    ADC1.SoftwareTriggerEnable();
-    
-    while(ADC1.IsConversionComplete(ADC1_Channel0) == false)
+    ADC1_SoftwareTriggerEnable();
+    while(!ADC1_ChannelResultIsReady(ADC1_CHANNEL0))
     {
-        
     }
-    
-    return ADC1.ConversionResultGet(ADC1_Channel0);
+    return ADC1_ChannelResultGet(ADC1_CHANNEL0);
 }
 
 const struct POT pot = 

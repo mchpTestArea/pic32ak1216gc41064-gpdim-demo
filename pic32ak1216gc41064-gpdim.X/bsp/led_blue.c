@@ -1,5 +1,5 @@
 /*
-© [2024] Microchip Technology Inc. and its subsidiaries.
+ï¿½ [2024] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -21,24 +21,26 @@
 
 #include <xc.h>
 #include "led_blue.h"
-#include "../mcc_generated_files/pwm/sccp3.h"
+#include "../../src/config/default/peripheral/ccp/plib_sccp3.h"
 
 static bool issccp3Enabled = false;
 
 void LED_BLUE_Initialize(void) 
 {
-    
+    SCCP3_CompareInitialize();
+    SCCP3_Compare16bitPeriodValueSet(0x0FFF);
+    SCCP3_Compare16bitRBValueSet(0x0000);
 }
 
 void LED_BLUE_On(void)
 {
-    SCCP3_PWM_Enable();
+    SCCP3_CompareStart();
     issccp3Enabled = true;
 }
 
 void LED_BLUE_Off(void)
 {
-    SCCP3_PWM_Disable();
+    SCCP3_CompareStop();
     issccp3Enabled = false;
 }
 
@@ -61,7 +63,7 @@ void LED_BLUE_Set(bool on)
 
 void LED_BLUE_SetIntensity(uint16_t request)
 {  
-    SCCP3_PWM_DutyCycleSet(request);
+    SCCP3_Compare16bitRBValueSet(request);
 } 
 
 const struct LED_DIMMABLE ledBlue = 
